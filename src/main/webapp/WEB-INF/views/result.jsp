@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Spring MVC Form Handling</title>
+      <title>Employee Information</title>
    </head>
    <body>
       <h2>Information Saved</h2>

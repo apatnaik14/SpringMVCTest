@@ -1,15 +1,18 @@
 package com.test.springmvc.controller;
 
 import com.test.springmvc.model.User;
+import com.test.springmvc.model.UserForm;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,12 +34,12 @@ public class HomeController {
         
     
         @RequestMapping(value="/get")
-	public ModelAndView employeeGet(ModelMap model, HttpServletResponse response) throws IOException{
+	public ModelAndView employeeGet(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException{
 		JSONParser parser = new JSONParser();
-                ModelAndView mav = new ModelAndView();
+                UserForm userVar = new UserForm();
                 try{
                     final File resourcesFolder = new File("C:\\Users\\Arpan Patnaik\\Documents\\NetBeansProjects\\TestProjects\\SpringMVC\\src\\main\\webapp\\resources\\Files\\");
-                    ArrayList<User> userList=new ArrayList<User>();
+                    List<User> users=new ArrayList<User>();
                     
                     for (final File fileEntry : resourcesFolder.listFiles()) {
                     if (fileEntry.isDirectory()) {
@@ -59,18 +62,17 @@ public class HomeController {
                          user.setDesignation(designation);
                          user.setLocation(location);
                          user.setPassword(password);
-                         userList.add(user);
+                         users.add(user);
 
                       }
                     }
                   }
-                model.addAttribute("userList", userList);
-                mav.setViewName("display");
+                userVar.setUsers(users);
                 }
                 catch (ParseException ex) {
                     ex.printStackTrace();
                 }
-		return mav;
+		return new ModelAndView("display", "userVar", userVar);
 	}
         @RequestMapping(value="/set")
 	public ModelAndView employeeSetPage(Model model, HttpServletResponse response) throws IOException{

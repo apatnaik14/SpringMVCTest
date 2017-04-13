@@ -10,7 +10,7 @@
     </head>
     <body>
     <form:form method="post" action="/SpringMVC/register" modelAttribute="user">
-    <table>
+    <table BORDER=10 align="center">
     <tr>
         <td>User Name</td>
         <td><form:input path="userName" /></td>

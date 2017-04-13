@@ -15,11 +15,11 @@
 	<br>
 	<div style="text-align:center">
 		<h2>
-			Hey You..!! This is your 1st Spring MCV Tutorial..<br> <br>
+			Employee Save Page<br> <br>
 		</h2>
 		<h3>
-			<a href="<c:url value="/get"/>">Click here to See Get Page Message... </a><br><br>
-                        <a href="<c:url value="/set"/>">Click here to See Set Page Message... </a>
+			<a href="<c:url value="/get"/>">Click to GET Emp Details </a><br><br>
+                        <a href="<c:url value="/set"/>">Click to SET Emp Details </a>
 		</h3>
 	</div>
 </body>

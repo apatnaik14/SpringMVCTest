@@ -7,39 +7,33 @@
 <%@page import="com.test.springmvc.model.User"%>
 <%@page import="java.util.ArrayList"%>
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
-<form:form modelAttribute="userList">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<form:form modelAttribute="userVar">
 <html>
    <head>
-      <title>Spring MVC Form Handling</title>
+      <title>Employee Information Page</title>
    </head>
 
    <body>
-      <h2>Submitted Student Information</h2>
-      <table>
-         <c:forEach items="${userList}" var="user">
+      <h2 align="center">Submitted Employee Information</h2>
+      <table BORDER=10 align="center">
+        <tr bgcolor="#FF0000">
+		<th>Name</th>
+		<th>Designation</th>
+		<th>Password</th>
+		<th>Age</th>
+                <th>Location</th>
+	</tr>
+         <c:forEach items="${userVar.users}" var="user">
          <tr>
-            <td>Name: </td>
-            <td>${user.userName}</td>
-         </tr>
-         <tr>
-            <td>Designation: </td>
-            <td>${user.designation}</td>
-         </tr>
-         <tr>
-            <td>Password: </td>
+            <td>${user.userName}/></td>
+            <td>${user.designation}/></td>
             <td>${user.password}</td>
-         </tr>
-         <tr>
-            <td>Age: </td>
             <td>${user.age}</td>
-         </tr>
-         <tr>
-            <td>Location: </td>
             <td>${user.location}</td>
          </tr>
       </c:forEach>
       </table>  
    </body>
-   
 </html>
 </form:form>
