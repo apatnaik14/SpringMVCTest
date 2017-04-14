@@ -6,18 +6,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Save User Details</title>
+        <link rel="stylesheet" href="resources/style.css">
+        <title>Save Employee Details</title>
     </head>
     <body>
+    <h2 align="center">Submit Employee Information</h2>
     <form:form method="post" action="/SpringMVC/register" modelAttribute="user">
-    <table BORDER=10 align="center">
+    <table id="employee" align="center">
     <tr>
         <td>User Name</td>
         <td><form:input path="userName" /></td>
     </tr>
     <tr>
         <td>Password</td>
-        <td><form:input path="password" /></td>
+        <td><form:input type="password" path="password" /></td>
     </tr>
     <tr>
         <td>Age</td>
@@ -33,7 +35,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <input type="submit" value="send"/>
+            <input class="btn" type="submit" value="Save"/>
         </td>
     </tr>
 </table>

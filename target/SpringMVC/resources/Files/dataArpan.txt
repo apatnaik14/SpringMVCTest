@@ -1,1 +1,1 @@
-{"Designation":"Staff","Age":"31","Name":"Arpan","Password":"password","Location":"SLC"}
+{"Designation":"Clerk","Age":"31","Name":"Arpan","Password":"b\/d2AauiJD0hpXxgy\/D21A==","Location":"Lehi, UT"}

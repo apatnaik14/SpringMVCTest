@@ -12,12 +12,14 @@
 <html>
    <head>
       <title>Employee Information Page</title>
+      <link rel="stylesheet" href="resources/style.css">
    </head>
 
-   <body>
+   <body>     
       <h2 align="center">Submitted Employee Information</h2>
-      <table BORDER=10 align="center">
-        <tr bgcolor="#FF0000">
+      <br/>
+      <table id="employee" align="center">
+        <tr>
 		<th>Name</th>
 		<th>Designation</th>
 		<th>Password</th>
@@ -26,8 +28,8 @@
 	</tr>
          <c:forEach items="${userVar.users}" var="user">
          <tr>
-            <td>${user.userName}/></td>
-            <td>${user.designation}/></td>
+            <td>${user.userName}</td>
+            <td>${user.designation}</td>
             <td>${user.password}</td>
             <td>${user.age}</td>
             <td>${user.location}</td>

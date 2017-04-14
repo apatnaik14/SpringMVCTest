@@ -11,6 +11,7 @@
     <head>
         <title>Index Page</title>
     </head>
+    <link rel="stylesheet" href="resources/style.css">
     <body>
 	<br>
 	<div style="text-align:center">
@@ -18,10 +19,13 @@
 			Employee Save Page<br> <br>
 		</h2>
 		<h3>
-			<a href="<c:url value="/get"/>">Click to GET Emp Details </a><br><br>
-                        <a href="<c:url value="/set"/>">Click to SET Emp Details </a>
+                        <div>         
+                            <a class="btn" href="<c:url value="/get"/>">Get Employee Details</a><br><br>
+                            <a class="btn" href="<c:url value="/set"/>">Set Employee Details</a>
+                        </div>
 		</h3>
 	</div>
+                                  
 </body>
 </html>
 

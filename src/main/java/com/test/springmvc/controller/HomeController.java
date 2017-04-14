@@ -1,21 +1,18 @@
 package com.test.springmvc.controller;
 
+import com.test.springmvc.config.EncrypterPassword;
 import com.test.springmvc.model.User;
 import com.test.springmvc.model.UserForm;
+import com.test.springmvc.constants.EmployeeConstants;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,15 +27,13 @@ import org.json.simple.parser.ParseException;
 import org.springframework.ui.ModelMap;
 
 @Controller
-public class HomeController {
-        
-    
+public class HomeController {    
         @RequestMapping(value="/get")
 	public ModelAndView employeeGet(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException{
 		JSONParser parser = new JSONParser();
                 UserForm userVar = new UserForm();
                 try{
-                    final File resourcesFolder = new File("C:\\Users\\Arpan Patnaik\\Documents\\NetBeansProjects\\TestProjects\\SpringMVC\\src\\main\\webapp\\resources\\Files\\");
+                    final File resourcesFolder = new File(EmployeeConstants.resourcePath);
                     List<User> users=new ArrayList<User>();
                     
                     for (final File fileEntry : resourcesFolder.listFiles()) {
@@ -46,22 +41,15 @@ public class HomeController {
                         System.out.println(fileEntry.getName());
                     } else {
                         System.out.println("In here"+ fileEntry.getName());
-                        if (fileEntry.getName().contains("data")){
-                         System.out.println("In here for file like data");       
+                        if (fileEntry.getName().contains("data")){     
                          JSONObject obj= (JSONObject) parser.parse(new FileReader(fileEntry.getAbsolutePath()));
                          User user = this.getUserObject();
-                         System.out.println(obj.toJSONString());
-                         String userName = (String)obj.get("Name");
-                         String age = (String)obj.get("Age");
-                         String designation = (String)obj.get("Designation");
-                         String location = (String)obj.get("Location");
-                         String password = (String)obj.get("Password");
-                         System.out.println(userName + age + designation+ location+ password);
-                         user.setUserName(userName);
-                         user.setAge(age);
-                         user.setDesignation(designation);
-                         user.setLocation(location);
-                         user.setPassword(password);
+                         System.out.println(obj.toJSONString());  
+                         user.setUserName((String)obj.get("Name"));
+                         user.setAge((String)obj.get("Age"));
+                         user.setDesignation((String)obj.get("Designation"));
+                         user.setLocation((String)obj.get("Location"));
+                         user.setPassword(EncrypterPassword.decryptText((String)obj.get("Password")));
                          users.add(user);
 
                       }
@@ -71,6 +59,9 @@ public class HomeController {
                 }
                 catch (ParseException ex) {
                     ex.printStackTrace();
+                }
+                catch(Exception exp){
+                    exp.printStackTrace();
                 }
 		return new ModelAndView("display", "userVar", userVar);
 	}
@@ -88,21 +79,27 @@ public class HomeController {
         @RequestMapping(value="/register")
 	public String employeeSetValue(@ModelAttribute("user") User user, BindingResult result, Model model) throws IOException{
             System.out.println("Inside Reg Controller");
+            FileWriter file = null;
+            
+         try {
             JSONObject obj = new JSONObject();
             obj.put("Name", user.getUserName());
-            obj.put("Password", user.getPassword());
+            obj.put("Password", EncrypterPassword.encryptText(user.getPassword()));
             obj.put("Age", user.getAge());
             obj.put("Designation", user.getDesignation());
             obj.put("Location", user.getLocation());
            
-            FileWriter file = new FileWriter("C:\\Users\\Arpan Patnaik\\Documents\\NetBeansProjects\\TestProjects\\SpringMVC\\src\\main\\webapp\\resources\\Files\\data" + user.getUserName()+ ".txt");
-            try {
+            file = new FileWriter(EmployeeConstants.resourcePath + "data" + user.getUserName()+ ".txt");
+            
 			file.write(obj.toJSONString());
 			System.out.println("Successfully Copied JSON Object to File...");
 			System.out.println("\nJSON Object: " + obj);
-		}
+            }
             catch(IOException e){
                 e.printStackTrace();
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
             }
             finally{
                 System.out.println("In Finally Block");
